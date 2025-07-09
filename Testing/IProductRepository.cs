@@ -1,12 +1,15 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Testing.Models;
 
 namespace Testing;
 
 public interface IProductRepository
 {
-    IEnumerable<Product> GetAllProducts();
+    Task<IEnumerable<Product>> GetAllProducts();
     
-    Product GetProduct(int id);
+    Task<Product> GetProduct(int id);
+    
+    Task UpdateProduct(Product product);
 }

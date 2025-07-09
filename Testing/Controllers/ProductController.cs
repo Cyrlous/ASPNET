@@ -1,26 +1,45 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Testing.Models;
 
 namespace Testing.Controllers;
 
 public class ProductController : Controller
 {
-    private readonly IProductRepository repo;
+    private readonly IProductRepository _repo;
 
     public ProductController(IProductRepository repo)
     {
-        this.repo = repo;
+        _repo = repo;
     }
     
     // GET
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
-        var products = repo.GetAllProducts();
+        var products = await _repo.GetAllProducts();
         return View(products);
     }
 
-    public IActionResult ViewProduct(int id)
+    public async Task<IActionResult> ViewProduct(int id)
     {
-        var product = repo.GetProduct(id);
+        var product = await _repo.GetProduct(id);
         return View(product);
+    }
+
+    public async Task<IActionResult> UpdateProduct(int id)
+    {
+        Product product = await _repo.GetProduct(id);
+        if (product == null)
+        {
+            return View("ProductNotFound");
+        }
+        return View(product);
+    }
+
+    public async Task<IActionResult> UpdateProductToDatabase(Product product)
+    {
+        await _repo.UpdateProduct(product);
+        
+        return RedirectToAction("ViewProduct", new {id = product.ProductID});
     }
 }
