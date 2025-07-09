@@ -54,4 +54,10 @@ public class ProductController : Controller
         await _repo.InsertProduct(product);
         return RedirectToAction("Index");
     }
+
+    public async Task<IActionResult> DeleteProduct(Product product)
+    {
+        await _repo.DeleteProduct(product);
+        return RedirectToAction("Index");
+    }
 }
