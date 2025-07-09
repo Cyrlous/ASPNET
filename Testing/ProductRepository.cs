@@ -50,5 +50,12 @@ namespace Testing
             product.Categories = categoryList;
             return product;
         }
+
+        public async Task DeleteProduct(Product product)
+        {
+            await _conn.ExecuteAsync("DELETE FROM reviews WHERE ProductID = @id;", new { product.ProductID });
+            await _conn.ExecuteAsync("DELETE FROM sales WHERE ProductID = @id;", new { product.ProductID });
+            await _conn.ExecuteAsync("DELETE FROM products WHERE ProductID = @id;", new { product.ProductID });
+        }
     }
 }

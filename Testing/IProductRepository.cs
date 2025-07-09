@@ -16,4 +16,5 @@ public interface IProductRepository
      public Task InsertProduct(Product product);
      public Task<IEnumerable<Category>> GetCategories();
      public Task<Product> AssignCategory();
+     public Task DeleteProduct(Product product);
 }
