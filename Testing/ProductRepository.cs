@@ -31,5 +31,24 @@ namespace Testing
             await _conn.ExecuteAsync("UPDATE products SET Name = @name, Price = @price WHERE ProductID = @id",
                 new {name = product.Name, price = product.Price, id = product.ProductID});
         }
+
+        public async Task InsertProduct(Product product)
+        {
+            await _conn.ExecuteAsync("INSERT INTO products (NAME, PRICE, CATEGORYID) VALUES (@name, @price, @catId);",
+                new {name = product.Name, price = product.Price, id = product.ProductID});
+        }
+
+        public async Task<IEnumerable<Category>> GetCategories()
+        {
+            return await _conn.QueryAsync<Category>("SELECT * FROM categories;");
+        }
+
+        public async Task<Product> AssignCategory()
+        {
+            var categoryList = await GetCategories();
+            var product = new Product();
+            product.Categories = categoryList;
+            return product;
+        }
     }
 }
