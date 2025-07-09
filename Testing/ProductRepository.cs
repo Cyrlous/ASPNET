@@ -34,8 +34,8 @@ namespace Testing
 
         public async Task InsertProduct(Product product)
         {
-            await _conn.ExecuteAsync("INSERT INTO products (NAME, PRICE, CATEGORYID) VALUES (@name, @price, @catId);",
-                new {name = product.Name, price = product.Price, id = product.ProductID});
+            await _conn.ExecuteAsync("INSERT INTO products (NAME, PRICE, CATEGORYID) VALUES (@name, @price, @categoryID);",
+                new {name = product.Name, price = product.Price, categoryID = product.CategoryID});
         }
 
         public async Task<IEnumerable<Category>> GetCategories()

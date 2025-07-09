@@ -42,4 +42,16 @@ public class ProductController : Controller
         
         return RedirectToAction("ViewProduct", new {id = product.ProductID});
     }
+
+    public async Task<IActionResult> InsertProduct(int id)
+    {
+        var prod = await _repo.AssignCategory();
+        return View(prod);
+    }
+
+    public async Task<IActionResult> InsertProductToDatabase(Product product)
+    {
+        await _repo.InsertProduct(product);
+        return RedirectToAction("Index");
+    }
 }
